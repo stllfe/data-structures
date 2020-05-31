@@ -1,2 +1,2 @@
 # data-structures
-Common data-structures written in Python.
+Common data structures written in Python.
