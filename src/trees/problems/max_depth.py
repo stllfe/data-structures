@@ -3,7 +3,7 @@ from src.trees.binary_tree import Node
 
 
 def max_depth(tree: BinaryTree, top_down=True) -> int:
-    """Given a binary tree, finds its maximum depth.
+    r"""Given a binary tree, finds its maximum depth.
 
     The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
@@ -21,15 +21,15 @@ def max_depth(tree: BinaryTree, top_down=True) -> int:
 
     Args:
         tree (BinaryTree): The tree to find max depth of.
-        top_down (bool): Whether to solve using top-down approach (preorder) or bottom-up instead (postorder).
+        top_down (bool): Whether to solve using top-down (preorder) approach or bottom-up (postorder) instead.
     """
 
     def top_down_solution(node: Node, current_depth: int):
         if not node:
             return 0
         current_depth += 1
-        left_depth = top_down_solution(node.left, current_depth) if node.left else 0
-        right_depth = top_down_solution(node.right, current_depth) if node.right else 0
+        left_depth = top_down_solution(node.left, current_depth)
+        right_depth = top_down_solution(node.right, current_depth)
         return max(current_depth, left_depth, right_depth)
 
     def bottom_up_solution(node: Node):
