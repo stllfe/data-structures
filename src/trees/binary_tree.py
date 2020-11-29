@@ -9,18 +9,17 @@ class Node:
         self.right = right
 
     def __str__(self):
-        return f"<Node ('{type(self.value).__name__}'): {self.value}>"
+        return f'<Node: {type(self.value).__name__} = {self.value}>'
 
     def __bool__(self):
         return True
 
-    @property
     def is_leaf(self):
         return not self.left and not self.right
 
-    @property
     def children(self):
-        return [child for child in (self.left, self.right) if child]
+        for child in (self.left, self.right):
+            yield child
 
 
 class BinaryTree:
@@ -95,11 +94,23 @@ class BinaryTree:
             subtrees = list()
 
             for node in nodes:
-                subtrees.extend(node.children)
+                if not node:
+                    continue
+                subtrees.extend(node.children())
 
-            if subtrees:
-                queue.append(subtrees)
-                values.append([node.val for node in subtrees])
+            if not subtrees:
+                continue
+
+            queue.append(subtrees)
+
+            level = [
+                node.value if node else None
+                for node in subtrees
+            ]
+
+            # Don't include the last level: [None, None, None, None]
+            if any(level):
+                values.append(level)
 
         return values
 
