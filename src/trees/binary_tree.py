@@ -36,9 +36,9 @@ class BinaryTree:
 
     @root.setter
     def root(self, value):
-        assert isinstance(value, Node)
+        assert isinstance(value, Node), "The root should be a `Node` instance."
         if self._root:
-            raise AttributeError("Root value is already set.")
+            raise AttributeError("The root value is already set.")
         self._root = value
 
     def preorder(self) -> list:
@@ -91,22 +91,14 @@ class BinaryTree:
 
         while queue:
             nodes = queue.popleft()
-            subtrees = list()
-
-            for node in nodes:
-                if not node:
-                    continue
-                subtrees.extend(node.children())
+            subtrees = [child for node in nodes if node for child in node.children()]
 
             if not subtrees:
                 continue
 
             queue.append(subtrees)
 
-            level = [
-                node.value if node else None
-                for node in subtrees
-            ]
+            level = [node.value if node else None for node in subtrees]
 
             # Don't include the last level: [None, None, None, None]
             if any(level):
