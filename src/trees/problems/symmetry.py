@@ -29,14 +29,11 @@ def is_symmetric_iteratively(tree: BinaryTree) -> bool:
     def is_mirrored_level(level):
         num_children = len(level)
         mid_idx = num_children // 2
-
-        # A tree with odd number of nodes can't be symmetric...
-        if num_children % 2 != 0:
-            return False
-
         left, right = level[:mid_idx], level[mid_idx:]
+
         if left != right[::-1]:
             return False
+
         return True
 
     queue = deque()
@@ -47,9 +44,9 @@ def is_symmetric_iteratively(tree: BinaryTree) -> bool:
 
         if not subtrees:
             continue
-
         if not is_mirrored_level([node.value if node else None for node in subtrees]):
             return False
+
         queue.append(subtrees)
     return True
 
